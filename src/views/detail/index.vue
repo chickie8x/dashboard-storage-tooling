@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <div>
-      <h1>Detail</h1>
+  <div class="w-full h-full">
+    <div class="max-w-7xl mx-auto p-8 h-full flex flex-col gap-4">
+      <h1 class="text-2xl font-bold">Chi tiết phiên</h1>
       <div>
         <Table :headers="transportCodeHeaders" :data="data" />
       </div>

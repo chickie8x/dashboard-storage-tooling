@@ -3,7 +3,9 @@
     <table class="w-full border border-slate-300">
       <thead class="bg-slate-200 h-10 text-sm">
         <tr class="text-left">
-          <th class="px-4 py-2 border-r border-white"><input type="checkbox" class="w-4 h-4" /></th>
+          <th class="px-4 py-2 border-r border-white">
+            <input type="checkbox" disabled class="w-4 h-4" />
+          </th>
           <th
             v-for="header in headers"
             :key="header.value"
@@ -82,4 +84,12 @@ const handleClick = (key, id) => {
   if (key !== 'sessionCode') return
   router.push(`/session/${id}`)
 }
+
+const refreshCheckbox = () => {
+  selectedRows.value = new Array(props.data.length).fill(null)
+}
+
+defineExpose({
+  refreshCheckbox,
+})
 </script>

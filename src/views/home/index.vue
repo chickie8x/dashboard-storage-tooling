@@ -7,14 +7,20 @@
         <Button variant="secondary" size="md">Tìm kiếm</Button>
       </div>
       <div class="flex items-center gap-2">
-        <Button variant="primary" size="md" class="flex items-center gap-2" @click="handleExport">
-          <ArrowDownTrayIcon class="w-4 h-4" />
-          Xuất dữ liệu
+        <Button variant="primary" size="md" class="flex items-center" @click="handleExport">
+          <ArrowDownTrayIcon v-if="!isExporting" class="w-4 h-4 mr-2" />
+          <Loading v-else class="w-4 h-4 animate-spin" />
+          {{ isExporting ? 'Đang xuất dữ liệu...' : 'Xuất dữ liệu' }}
         </Button>
       </div>
     </div>
     <div class="w-full flex-grow mt-4">
-      <Table :headers="sessionTableHeaders" :data="data" @selectRow="handleSelectRow" />
+      <Table
+        :headers="sessionTableHeaders"
+        :data="data"
+        @selectRow="handleSelectRow"
+        ref="tableRef"
+      />
     </div>
     <div class="mt-4 gap-4 flex items-center justify-center w-full">
       <span class="text-gray-500">Trang :</span>
@@ -73,6 +79,8 @@ import { useRouter } from 'vue-router'
 import axios from 'axios'
 import { ArrowDownTrayIcon } from '@heroicons/vue/24/solid'
 import { exportExcel, preprocessData } from '@/utils'
+import Loading from '@/components/icons/loading.vue'
+
 const router = useRouter()
 const search = ref('')
 const data = ref([])
@@ -81,6 +89,8 @@ const pageSize = ref(10)
 const totalPage = ref(1)
 const selectedRows = ref([])
 const token = localStorage.getItem('token')
+const tableRef = ref(null)
+const isExporting = ref(false)
 
 const fetchData = async () => {
   await axios
@@ -94,24 +104,23 @@ const fetchData = async () => {
       },
     })
     .then((res) => {
-      console.log(res.data)
       data.value = res.data.sessionTransport
       selectedRows.value = new Array(res.data.sessionTransport.length).fill(false)
       totalPage.value = res.data.total
     })
     .catch((err) => {
-      console.log(err)
+      alert(err.response?.data?.message || err.message)
     })
 }
 
 const handlePage = (page) => {
   currentPage.value = page
   fetchData()
+  tableRef.value.refreshCheckbox()
 }
 
 const handleSelectRow = (rows) => {
   selectedRows.value = [...rows]
-  console.log(selectedRows.value)
 }
 
 const handleExport = () => {
@@ -124,6 +133,7 @@ const handleExport = () => {
   if (ids.length === 0) {
     return
   }
+  isExporting.value = true
   axios
     .post(
       'http://localhost:3000/export',
@@ -135,11 +145,12 @@ const handleExport = () => {
       },
     )
     .then((res) => {
-      console.log(res.data)
       exportExcel(preprocessData(res.data))
+      isExporting.value = false
     })
     .catch((err) => {
       alert(err.response?.data?.message || err.message)
+      isExporting.value = false
     })
 }
 
