@@ -19,6 +19,11 @@ const router = createRouter({
       name: 'auth',
       component: () => import('../views/auth/index.vue'),
     },
+    {
+      path: '/tracking',
+      name: 'tracking',
+      component: () => import('../views/tracking/index.vue'),
+    },
   ],
 })
 
