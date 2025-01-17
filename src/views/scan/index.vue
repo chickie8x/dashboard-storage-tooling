@@ -99,7 +99,7 @@
       transporter: transport.value,
       transportCodeQuantity: listItems.value.length,
     }
-    axios.post("http://14.225.27.121/session-transport/create", data, {
+    axios.post("http://14.225.27.121/api/session-transport/create", data, {
       headers: {
         authorization: `Bearer ${token.value}`,
       },
