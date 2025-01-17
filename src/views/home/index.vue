@@ -1,165 +1,37 @@
 <template>
-  <div class="max-w-7xl mx-auto p-8 h-full flex flex-col">
-    <h1 class="text-2xl font-bold">Danh sách phiên</h1>
-    <div class="flex items-center justify-between w-full mt-8">
-      <div class="flex gap-2 items-center">
-        <Search v-model="search" class="w-96 max-w-md" />
-        <Button variant="secondary" size="md">Tìm kiếm</Button>
-      </div>
-      <div class="flex items-center gap-2">
-        <Button variant="primary" size="md" class="flex items-center" @click="handleExport">
-          <ArrowDownTrayIcon v-if="!isExporting" class="w-4 h-4 mr-2" />
-          <Loading v-else class="w-4 h-4 animate-spin" />
-          {{ isExporting ? 'Đang xuất dữ liệu...' : 'Xuất dữ liệu' }}
-        </Button>
-      </div>
+    <div class="h-screen">
+        <div class="flex justify-center items-center h-full relative">
+            <img src="/images/bgg.jpg" alt="" class="absolute top-0 left-0 w-full h-full object-cover">
+            <div class="bg-black bg-opacity-50 rounded-md p-4 absolute top-0 left-0 w-full h-full flex items-center justify-center space-x-6">
+                <button @click="goToDashboard" class="min-w-48 px-8 py-2 bg-orange-500 text-white text-2xl font-semibold rounded-md duration-300 hover:bg-orange-400 flex items-center justify-center">
+                    <HomeIcon class="w-6 h-6 mr-2" />
+                    Dashboard
+                </button>
+                <button @click="goToScan" class="min-w-48 px-8 py-2 bg-orange-500 text-white text-2xl font-semibold rounded-md duration-300 hover:bg-orange-400 flex items-center justify-center">
+                    <QrCodeIcon class="w-6 h-6 mr-2" />
+                    Scan
+                </button>
+                <button @click="goToTracking" class="min-w-48 px-8 py-2 bg-orange-500 text-white text-2xl font-semibold rounded-md duration-300 hover:bg-orange-400 flex items-center justify-center">
+                    <MagnifyingGlassIcon class="w-6 h-6 mr-2" />
+                    Tracking
+                </button>
+            </div>
+        </div>
     </div>
-    <div class="w-full flex-grow mt-4">
-      <Table
-        :headers="sessionTableHeaders"
-        :data="data"
-        @selectRow="handleSelectRow"
-        ref="tableRef"
-      />
-    </div>
-    <div class="mt-4 gap-4 flex items-center justify-center w-full">
-      <span class="text-gray-500">Trang :</span>
-      <span
-        v-if="currentPage > 1"
-        :class="{
-          'text-gray-500': currentPage === 1,
-          'text-blue-500 cursor-pointer': currentPage !== 1,
-        }"
-        @click="handlePage(1)"
-        >Đầu</span
-      >
-      <span
-        v-if="currentPage > 1"
-        @click="handlePage(currentPage - 1)"
-        :class="{
-          'text-gray-500': currentPage === 1,
-          'text-blue-500 cursor-pointer': currentPage !== 1,
-        }"
-        >Trang trước</span
-      >
-      <span
-        class="font-bold text-white bg-gray-600 px-2 py-1 rounded-full w-6 h-6 flex items-center justify-center"
-        >{{ currentPage }}</span
-      >
-      <span
-        v-if="currentPage < totalPage"
-        @click="handlePage(currentPage + 1)"
-        :class="{
-          'text-gray-500': currentPage === totalPage,
-          'text-blue-500 cursor-pointer': currentPage !== totalPage,
-        }"
-        >Trang sau</span
-      >
-      <span
-        v-if="currentPage < totalPage"
-        :class="{
-          'text-gray-500': currentPage === totalPage,
-          'text-blue-500 cursor-pointer': currentPage !== totalPage,
-        }"
-        @click="handlePage(totalPage)"
-        >Cuối</span
-      >
-    </div>
-  </div>
 </template>
 
 <script setup>
-import Table from '@/components/kits/table/index.vue'
-import Button from '@/components/kits/button/index.vue'
-import { ref } from 'vue'
-import Search from '@/components/kits/search/index.vue'
-import { sessionTableHeaders } from '@/components/kits/table'
-import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
-import { ArrowDownTrayIcon } from '@heroicons/vue/24/solid'
-import { exportExcel, preprocessData } from '@/utils'
-import Loading from '@/components/icons/loading.vue'
+import { MagnifyingGlassIcon, QrCodeIcon, HomeIcon } from '@heroicons/vue/24/solid'
 
 const router = useRouter()
-const search = ref('')
-const data = ref([])
-const currentPage = ref(1)
-const pageSize = ref(10)
-const totalPage = ref(1)
-const selectedRows = ref([])
-const token = localStorage.getItem('token')
-const tableRef = ref(null)
-const isExporting = ref(false)
-
-const fetchData = async () => {
-  await axios
-    .get('http://14.225.27.121/api/session-transport', {
-      params: {
-        page: currentPage.value,
-        limit: pageSize.value,
-      },
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    })
-    .then((res) => {
-      data.value = res.data.sessionTransport
-      selectedRows.value = new Array(res.data.sessionTransport.length).fill(false)
-      totalPage.value = res.data.total
-    })
-    .catch((err) => {
-      alert(err.response?.data?.message || err.message)
-    })
+const goToDashboard = () => {
+    router.push('/dashboard')
 }
-
-const handlePage = (page) => {
-  currentPage.value = page
-  fetchData()
-  tableRef.value.refreshCheckbox()
+const goToScan = () => {
+    router.push('/scan')
 }
-
-const handleSelectRow = (rows) => {
-  selectedRows.value = [...rows]
+const goToTracking = () => {
+    router.push('/tracking')
 }
-
-const handleExport = () => {
-  const ids = []
-  selectedRows.value.forEach((item, idx) => {
-    if (item) {
-      ids.push(data.value[idx].id)
-    }
-  })
-  if (ids.length === 0) {
-    return
-  }
-  isExporting.value = true
-  axios
-    .post(
-      'http://14.225.27.121/api/export',
-      { ids },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    )
-    .then((res) => {
-      exportExcel(preprocessData(res.data))
-      isExporting.value = false
-    })
-    .catch((err) => {
-      alert(err.response?.data?.message || err.message)
-      isExporting.value = false
-    })
-}
-
-onMounted(() => {
-  const token = localStorage.getItem('token')
-  if (!token) {
-    router.push('/auth')
-  } else {
-    fetchData()
-  }
-})
 </script>

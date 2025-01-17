@@ -40,7 +40,7 @@ const login = async () => {
     .post('http://14.225.27.121/api/login', data)
     .then((res) => {
       localStorage.setItem('token', res.data.token)
-      router.push('/')
+      router.go(-1)
     })
     .catch((err) => {
       alert(err.response ? err.response.data.message : err.message)

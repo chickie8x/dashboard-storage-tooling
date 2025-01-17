@@ -8,7 +8,16 @@ const router = createRouter({
       name: 'home',
       component: () => import('../views/home/index.vue'),
     },
-
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: () => import('../views/dashboard/index.vue'),
+    },
+    {
+      path: '/scan',
+      name: 'scan',
+      component: () => import('../views/scan/index.vue'),
+    },
     {
       path: '/session/:id',
       name: 'detail',
