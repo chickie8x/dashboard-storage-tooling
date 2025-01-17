@@ -23,7 +23,7 @@ const token = localStorage.getItem('token')
 
 const fetchData = async () => {
   await axios
-    .get(`http://localhost:3000/session-transport/${id}`, {
+    .get(`http://14.225.27.121/api/session-transport/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

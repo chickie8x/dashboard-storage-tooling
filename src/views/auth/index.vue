@@ -37,7 +37,7 @@ const login = async () => {
     password: password.value,
   }
   await axios
-    .post('http://localhost:3000/login', data)
+    .post('http://14.225.27.121/api/login', data)
     .then((res) => {
       localStorage.setItem('token', res.data.token)
       router.push('/')
