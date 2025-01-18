@@ -1,7 +1,7 @@
 <template>
   <div
     class="flex flex-col border border-gray-300 rounded-sm h-full overflow-y-auto"
-    :class="contentType === 'IN' ? 'bg-green-100' : 'bg-yellow-100'"
+    :class="contentType === 'Nhập' ? 'bg-green-100' : 'bg-yellow-100'"
   >
     <div
       v-for="(item, idx) in items"

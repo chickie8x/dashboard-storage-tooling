@@ -3,7 +3,7 @@
     <div class="max-w-7xl mx-auto p-8 h-full flex flex-col gap-4">
       <h1 class="text-2xl font-bold">Chi tiết phiên</h1>
       <div>
-        <Table :headers="transportCodeHeaders" :data="data" />
+        <Table :headers="transportCodeHeaders" :data="data" :isLoading="isLoading"/>
       </div>
     </div>
   </div>
@@ -20,6 +20,7 @@ const route = useRoute()
 const id = route.params.id
 const data = ref([])
 const token = localStorage.getItem('token')
+const isLoading = ref(true)
 
 const fetchData = async () => {
   await axios
@@ -30,10 +31,11 @@ const fetchData = async () => {
     })
     .then((res) => {
       data.value = res.data
-      console.log(res.data)
+      isLoading.value = false
     })
     .catch((err) => {
-      console.log(err)
+      isLoading.value = false
+      alert(err.response?.data?.message || err.message)
     })
 }
 

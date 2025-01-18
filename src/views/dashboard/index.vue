@@ -21,10 +21,15 @@
         </Button>
       </div>
     </div>
-    <div class="w-full flex-grow mt-4">
+    <div class="mt-4 flex items-center gap-2">
+      <InformationCircleIcon class="w-5 h-5 text-orange-600" />
+      <span class="text-sm text-orange-500">Lưu ý, trỏ chuột vào ô chi chú để xem đầy đủ nội dung ghi chú</span>
+    </div>
+    <div class="w-full flex-grow mt-1">
       <Table
         :headers="sessionTableHeaders"
         :data="data"
+        :isLoading="isLoading"
         @selectRow="handleSelectRow"
         ref="tableRef"
       />
@@ -84,7 +89,7 @@ import { sessionTableHeaders } from '@/components/kits/table'
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
-import { ArrowDownTrayIcon } from '@heroicons/vue/24/solid'
+import { ArrowDownTrayIcon, InformationCircleIcon } from '@heroicons/vue/24/solid'
 import { exportExcel, preprocessData } from '@/utils'
 import Loading from '@/components/icons/loading.vue'
 import UserIcon from '@/components/icons/user.vue'
@@ -101,6 +106,8 @@ const token = localStorage.getItem('token')
 const tableRef = ref(null)
 const isExporting = ref(false)
 const user = ref('')
+const isLoading = ref(true)
+
 const fetchData = async () => {
   await axios
     .get('http://14.225.27.121/api/session-transport', {
@@ -116,9 +123,11 @@ const fetchData = async () => {
       data.value = res.data.sessionTransport
       selectedRows.value = new Array(res.data.sessionTransport.length).fill(false)
       totalPage.value = res.data.total
+      isLoading.value = false
     })
     .catch((err) => {
       alert(err.response?.data?.message || err.message)
+      isLoading.value = false
     })
 }
 

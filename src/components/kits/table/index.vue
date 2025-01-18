@@ -17,7 +17,7 @@
       </thead>
       <tbody v-if="data.length === 0">
         <tr>
-          <td colspan="100%" class="text-center text-gray-500">&#9888; Không có dữ liệu</td>
+          <td colspan="100%" class="text-center text-gray-500">{{isLoading?'&#8693; Đang tải dữ liệu...':'&#9888; Không có dữ liệu'}}</td>
         </tr>
       </tbody>
       <tbody v-else class="text-sm text-slate-700">
@@ -38,6 +38,9 @@
                 : '',
               header.value === 'sessionCode'
                 ? 'text-blue-600 font-semibold cursor-pointer hover:underline'
+                : '',
+              header.value === 'note'
+                ? 'max-w-[160px] overflow-hidden hover:overflow-visible text-ellipsis whitespace-nowrap hover:whitespace-normal hover:break-words cursor-default'
                 : '',
             ]"
             @click="handleClick(header.value, row.id)"
@@ -66,6 +69,10 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  isLoading:{
+    type: Boolean,
+    default: () => false
+  }
 })
 
 const emit = defineEmits(['selectRow'])
