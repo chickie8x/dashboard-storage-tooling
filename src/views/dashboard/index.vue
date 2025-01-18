@@ -163,6 +163,11 @@ const handleExport = () => {
     })
 }
 
+const handleLogout = () => {
+  localStorage.removeItem('token')
+  router.push('/auth')
+}
+
 onMounted(() => {
   const token = localStorage.getItem('token')
   if (!token) {
