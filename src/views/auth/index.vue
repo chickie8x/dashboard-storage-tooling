@@ -1,18 +1,23 @@
 <template>
-  <div class="flex flex-col items-center justify-center h-screen text-sm">
-    <div class="flex flex-col gap-4 p-4 rounded-md w-96 bg-slate-200 shadow-md">
+  <div class="flex items-center justify-center h-screen text-sm">
+    <div class="flex flex-col p-4 rounded-md max-w-md flex-1 mx-4 bg-slate-200 shadow-md">
       <h1 class="text-2xl font-bold uppercase text-slate-700 text-center">Đăng nhập</h1>
+      <label for="email" class="text-sm text-slate-700 font-semibold">Email</label>
       <input
-        v-model="username"
+        v-model="email"
         class="px-4 py-2 outline-none border border-slate-300 rounded-md shadow-sm"
-        placeholder="Tên đăng nhập"
+        placeholder="Email"
       />
+      <label for="password" class="text-sm text-slate-700 font-semibold mt-4">Mật khẩu</label>
       <input
         v-model="password"
         type="password"
         class="px-4 py-2 outline-none border border-slate-300 rounded-md shadow-sm"
         placeholder="Mật khẩu"
       />
+      <div class="flex justify-end mb-8 mt-2">
+        <span class="text-sm text-blue-500 cursor-pointer hover:underline" @click="router.push('/')">Trở về trang chủ</span>
+      </div>
       <Button variant="primary" size="md" @click="login">Đăng nhập</Button>
     </div>
   </div>
@@ -24,16 +29,16 @@ import axios from 'axios'
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-const username = ref('')
+const email = ref('')
 const password = ref('')
 const router = useRouter()
 
 const login = async () => {
-  if (!username.value || !password.value) {
+  if (!email.value || !password.value) {
     return
   }
   const data = {
-    email: username.value,
+    email: email.value,
     password: password.value,
   }
   await axios
@@ -49,7 +54,6 @@ const login = async () => {
 
 onMounted(() => {
   const token = localStorage.getItem('token')
-  console.log(token)
   if (token) {
     router.push('/')
   }

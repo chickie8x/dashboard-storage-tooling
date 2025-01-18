@@ -1,11 +1,17 @@
 <template>
     <div class="flex flex-col gap-2 p-4 text-sm h-screen">
-      <div>
+      <div class="flex items-center justify-between gap-2">
         <Select
           v-model="sessionType"
           :options="typeOptions"
-          class="w-full border border-gray-300 rounded-sm h-10 px-4 bg-gray-100 outline-indigo-500"
+          class="flex-1 border border-gray-300 rounded-sm h-10 px-4 bg-gray-100 outline-indigo-500"
         />
+        <div class="flex flex-1 items-center justify-center gap-1 border border-gray-300 rounded-sm h-10 px-1 bg-gray-100">
+          <UserIcon class="text-slate-700"/>
+          <button @click="handleLogout" class="text-blue-500 text-sm underline px-2 py-1 rounded-sm">
+            Đăng xuất
+          </button>
+        </div>
       </div>
       <div>
         <input
@@ -62,6 +68,7 @@
   import Select from '@/components/kits/select/index.vue'
   import ListItem from '@/components/kits/list/index.vue'
   import { typeOptions, transportOptions, goodsStatusOptions } from '.'
+  import UserIcon from '@/components/icons/user.vue'
   
   const sessionType = ref(typeOptions[0].value)
   const code = ref('')
@@ -126,7 +133,11 @@
       }
     }, 500)
   }
-  
+
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    router.push('/')
+  }
   
   onMounted(() => {
     token.value = localStorage.getItem("token");

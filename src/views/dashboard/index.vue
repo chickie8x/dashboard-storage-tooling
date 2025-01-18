@@ -1,6 +1,13 @@
 <template>
   <div class="max-w-7xl mx-auto p-8 h-full flex flex-col">
-    <h1 class="text-2xl font-bold">Danh sách phiên</h1>
+    <div class="flex items-center justify-between">
+      <h1 class="text-2xl font-bold">Danh sách phiên</h1>
+      <div class="flex items-center gap-2">
+        <UserIcon class="text-slate-700"/>
+        <span class="text-sm text-slate-700">{{ user }}</span>
+        <button @click="handleLogout" class="text-blue-500 text-sm underline px-2 py-1 rounded-sm">Đăng xuất</button>
+      </div>
+    </div>
     <div class="flex items-center justify-between w-full mt-8">
       <div class="flex gap-2 items-center">
         <Search v-model="search" class="w-96 max-w-md" />
@@ -80,6 +87,8 @@ import axios from 'axios'
 import { ArrowDownTrayIcon } from '@heroicons/vue/24/solid'
 import { exportExcel, preprocessData } from '@/utils'
 import Loading from '@/components/icons/loading.vue'
+import UserIcon from '@/components/icons/user.vue'
+import { jwtDecode } from 'jwt-decode'
 
 const router = useRouter()
 const search = ref('')
@@ -91,7 +100,7 @@ const selectedRows = ref([])
 const token = localStorage.getItem('token')
 const tableRef = ref(null)
 const isExporting = ref(false)
-
+const user = ref('')
 const fetchData = async () => {
   await axios
     .get('http://14.225.27.121/api/session-transport', {
@@ -160,6 +169,8 @@ onMounted(() => {
     router.push('/auth')
   } else {
     fetchData()
+    const decoded = jwtDecode(token)
+    user.value = decoded.name
   }
 })
 </script>
