@@ -7,10 +7,10 @@
                     <HomeIcon class="w-6 h-6 mr-2" />
                     Dashboard
                 </button>
-                <button @click="goToScan" class="min-w-56 py-2 bg-orange-500 text-white text-2xl font-semibold rounded-md duration-300 hover:bg-orange-400 flex items-center justify-center">
+                <a href="/pda" class="min-w-56 py-2 bg-orange-500 text-white text-2xl font-semibold rounded-md duration-300 hover:bg-orange-400 flex items-center justify-center">
                     <QrCodeIcon class="w-6 h-6 mr-2" />
                     Scan
-                </button>
+                </a>
                 <button @click="goToTracking" class="min-w-56 py-2 bg-orange-500 text-white text-2xl font-semibold rounded-md duration-300 hover:bg-orange-400 flex items-center justify-center">
                     <MagnifyingGlassIcon class="w-6 h-6 mr-2" />
                     Tracking
@@ -28,9 +28,7 @@ const router = useRouter()
 const goToDashboard = () => {
     router.push('/dashboard')
 }
-const goToScan = () => {
-    router.push('../pda')
-}
+
 const goToTracking = () => {
     router.push('/tracking')
 }
