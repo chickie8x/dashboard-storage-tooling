@@ -29,7 +29,7 @@ const goToDashboard = () => {
     router.push('/dashboard')
 }
 const goToScan = () => {
-    router.push('/scan')
+    router.push('../pda')
 }
 const goToTracking = () => {
     router.push('/tracking')

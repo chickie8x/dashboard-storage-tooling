@@ -13,11 +13,11 @@ const router = createRouter({
       name: 'dashboard',
       component: () => import('../views/dashboard/index.vue'),
     },
-    {
-      path: '/scan',
-      name: 'scan',
-      component: () => import('../views/scan/index.vue'),
-    },
+    // {
+    //   path: '/scan',
+    //   name: 'scan',
+    //   component: () => import('../views/scan/index.vue'),
+    // },
     {
       path: '/session/:id',
       name: 'detail',
