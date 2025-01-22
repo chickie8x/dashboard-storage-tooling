@@ -54,6 +54,11 @@ export const preprocessData = (data) => {
       delete item.createdAt
     }
 
+    if (item.note) {
+      item['Ghi chú'] = item.note
+      delete item.note
+    }
+
     return item
   })
 }
