@@ -10,8 +10,8 @@
     </div>
     <div class="flex items-center justify-between w-full mt-8">
       <div class="flex gap-2 items-center">
-        <Search v-model="search" class="w-96 max-w-md" />
-        <Button variant="secondary" size="md">Tìm kiếm</Button>
+        <!-- <Search v-model="search" class="w-96 max-w-md" />
+        <Button variant="secondary" size="md">Tìm kiếm</Button> -->
       </div>
       <div class="flex items-center gap-2">
         <Button variant="primary" size="md" class="flex items-center" @click="handleExport">
