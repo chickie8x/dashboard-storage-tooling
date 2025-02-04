@@ -16,7 +16,9 @@
         placeholder="Mật khẩu"
       />
       <div class="flex justify-end mb-8 mt-2">
-        <span class="text-sm text-blue-500 cursor-pointer hover:underline" @click="router.push('/')">Trở về trang chủ</span>
+        <span class="text-sm text-blue-500 cursor-pointer hover:underline" @click="router.push('/')"
+          >Trở về trang chủ</span
+        >
       </div>
       <Button variant="primary" size="md" @click="login">Đăng nhập</Button>
     </div>

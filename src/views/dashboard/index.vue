@@ -3,9 +3,11 @@
     <div class="flex items-center justify-between">
       <h1 class="text-2xl font-bold">Danh sách phiên</h1>
       <div class="flex items-center gap-2">
-        <UserIcon class="text-slate-700"/>
+        <UserIcon class="text-slate-700" />
         <span class="text-sm text-slate-700">{{ user }}</span>
-        <button @click="handleLogout" class="text-blue-500 text-sm underline px-2 py-1 rounded-sm">Đăng xuất</button>
+        <button @click="handleLogout" class="text-blue-500 text-sm underline px-2 py-1 rounded-sm">
+          Đăng xuất
+        </button>
       </div>
     </div>
     <div class="flex items-center justify-between w-full mt-8">
@@ -23,7 +25,9 @@
     </div>
     <div class="mt-4 flex items-center gap-2">
       <InformationCircleIcon class="w-5 h-5 text-orange-600" />
-      <span class="text-sm text-orange-500">Lưu ý, trỏ chuột vào ô chi chú để xem đầy đủ nội dung ghi chú</span>
+      <span class="text-sm text-orange-500"
+        >Lưu ý, trỏ chuột vào ô chi chú để xem đầy đủ nội dung ghi chú</span
+      >
     </div>
     <div class="w-full flex-grow mt-1">
       <Table

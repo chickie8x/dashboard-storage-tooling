@@ -1,23 +1,21 @@
 <template>
   <div class="w-full h-full">
-    <table class="w-full border border-slate-300">
+    <table class="w-full min-w-[720px] border border-slate-300">
       <thead class="bg-slate-200 h-10 text-sm">
         <tr class="text-left">
           <th class="px-4 py-2 border-r border-white">
             <input type="checkbox" disabled class="w-4 h-4" />
           </th>
-          <th
-            v-for="header in headers"
-            :key="header.value"
-            class="px-4 py-2 font-medium border-r border-white"
-          >
+          <th v-for="header in headers" :key="header.value" class="px-4 py-2 border-r border-white">
             {{ header.label }}
           </th>
         </tr>
       </thead>
       <tbody v-if="data.length === 0">
         <tr>
-          <td colspan="100%" class="text-center text-gray-500">{{isLoading?'&#8693; Đang tải dữ liệu...':'&#9888; Không có dữ liệu'}}</td>
+          <td colspan="100%" class="text-center text-gray-500">
+            {{ isLoading ? '&#8693; Đang tải dữ liệu...' : '&#9888; Không có dữ liệu' }}
+          </td>
         </tr>
       </tbody>
       <tbody v-else class="text-sm text-slate-700">
@@ -42,6 +40,7 @@
               header.value === 'note'
                 ? 'max-w-[160px] overflow-hidden hover:overflow-visible text-ellipsis whitespace-nowrap hover:whitespace-normal hover:break-words cursor-default'
                 : '',
+              header.value === 'isDone' ? 'text-green-600 font-semibold' : '',
             ]"
             @click="handleClick(header.value, row.id)"
           >
@@ -69,10 +68,10 @@ const props = defineProps({
     type: Array,
     required: true,
   },
-  isLoading:{
+  isLoading: {
     type: Boolean,
-    default: () => false
-  }
+    default: () => false,
+  },
 })
 
 const emit = defineEmits(['selectRow'])

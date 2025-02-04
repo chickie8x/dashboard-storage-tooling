@@ -3,7 +3,7 @@
     <div class="max-w-7xl mx-auto p-8 h-full flex flex-col gap-4">
       <h1 class="text-2xl font-bold">Chi tiết phiên</h1>
       <div>
-        <Table :headers="transportCodeHeaders" :data="data" :isLoading="isLoading"/>
+        <Table :headers="transportCodeHeaders" :data="data" :isLoading="isLoading" />
       </div>
     </div>
   </div>

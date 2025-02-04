@@ -11,8 +11,9 @@ export const sessionTableHeaders = [
 
 export const transportCodeHeaders = [
   { label: 'Mã vận đơn', value: 'code' },
-  { label: 'Tình trạng hàng', value: 'goodsStatus' },
+  { label: 'Trạng thái đơn', value: 'isDone' },
   { label: 'Đơn vị vận chuyển', value: 'transporter' },
+  { label: 'Tình trạng hàng', value: 'goodsStatus' },
   { label: 'Ngày tạo', value: 'createdAt' },
   { label: 'Ghi chú', value: 'note' },
 ]
