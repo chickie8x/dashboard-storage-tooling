@@ -40,6 +40,9 @@
               header.value === 'sessionCode'
                 ? 'text-blue-600 font-semibold cursor-pointer hover:underline'
                 : '',
+              header.value === 'code'
+                ? 'text-blue-600 font-semibold'
+                : '',
               header.value === 'note'
                 ? 'max-w-[160px] overflow-hidden hover:overflow-visible text-ellipsis whitespace-nowrap hover:whitespace-normal hover:break-words cursor-default'
                 : '',
