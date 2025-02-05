@@ -114,7 +114,7 @@ const isLoading = ref(true)
 
 const fetchData = async () => {
   await axios
-    .get('http://14.225.27.121/api/session-transport', {
+    .get('http://171.244.62.54/api/session-transport', {
       params: {
         page: currentPage.value,
         limit: pageSize.value,
@@ -158,7 +158,7 @@ const handleExport = () => {
   isExporting.value = true
   axios
     .post(
-      'http://14.225.27.121/api/export',
+      'http://171.244.62.54/api/export',
       { ids },
       {
         headers: {

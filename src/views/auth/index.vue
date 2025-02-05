@@ -44,7 +44,7 @@ const login = async () => {
     password: password.value,
   }
   await axios
-    .post('http://14.225.27.121/api/login', data)
+    .post('http://171.244.62.54/api/login', data)
     .then((res) => {
       localStorage.setItem('token', res.data.token)
       router.go(-1)

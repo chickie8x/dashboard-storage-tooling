@@ -97,7 +97,7 @@ const handleSearch = () => {
   }
   const codes = tracking.value.split(' ')
   axios
-    .post(`http://14.225.27.121/api/tracking-transport`, { codes })
+    .post(`http://171.244.62.54/api/tracking-transport`, { codes })
     .then((res) => {
       if (res.data.length > 0) {
         data.value = res.data
