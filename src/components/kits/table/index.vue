@@ -31,8 +31,11 @@
               header.value === 'goodsStatus' && row[header.value] === 'OK'
                 ? 'text-green-600 font-semibold'
                 : '',
-              header.value === 'goodsStatus' && row[header.value] !== 'OK'
+              header.value === 'goodsStatus' && row[header.value] !== 'Hỏng'
                 ? 'text-red-600 font-semibold'
+                : '',
+              header.value === 'goodsStatus'
+                ? 'text-fuchsia-600 font-semibold'
                 : '',
               header.value === 'sessionCode'
                 ? 'text-blue-600 font-semibold cursor-pointer hover:underline'
