@@ -31,7 +31,7 @@
               header.value === 'goodsStatus' && row[header.value] === 'OK'
                 ? 'text-green-600 font-semibold'
                 : '',
-              header.value === 'goodsStatus' && row[header.value] !== 'Hỏng'
+              header.value === 'goodsStatus' && row[header.value] === 'Hỏng'
                 ? 'text-red-600 font-semibold'
                 : '',
               header.value === 'goodsStatus'
