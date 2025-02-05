@@ -103,13 +103,13 @@ const handleSearch = () => {
         data.value = res.data
         isFound.value = true
         message.value =
-          lang.value === 'cn' ? `运单号: ${tracking.value}` : `mã vận đơn: ${tracking.value}`
+          lang.value === 'cn' ? `运单号:` : `mã vận đơn:`
       } else {
         isFound.value = false
         message.value =
           lang.value === 'cn'
-            ? `运单号: ${tracking.value} 未找到`
-            : `mã vận đơn: ${tracking.value}: Không tìm thấy`
+            ? `运单号:  未找到`
+            : `mã vận đơn: Không tìm thấy`
       }
     })
     .catch((err) => {
