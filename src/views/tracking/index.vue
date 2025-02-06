@@ -29,9 +29,12 @@
           @click="handleSearch"
           :variant="'primary'"
           size="md"
-          class="w-full mt-2 md:w-auto md:mt-4"
-          >{{ lang === 'cn' ? '查询' : 'Tìm kiếm' }}</Button
+          class="w-full mt-2 md:w-auto min-w-24 md:mt-4 flex items-center justify-center"
+          :disabled="isLoading"
         >
+          <Loading v-if="isLoading" class="w-4 h-4 mr-0" />
+          {{ isLoading ? '' : lang === 'cn' ? '查询' : 'Tìm kiếm' }}
+        </Button>
       </div>
       <div class="mt-4">
         <div class="flex flex-col">
@@ -56,11 +59,13 @@ import Table from '@/components/kits/table/index.vue'
 import Select from '@/components/kits/select/index.vue'
 import ChinaFlag from '@/components/icons/chinaFlag.vue'
 import VietnamFlag from '@/components/icons/vietnamFlag.vue'
+import Loading from '@/components/icons/loading.vue'
 import axios from 'axios'
 
 const tracking = ref('')
 const data = ref([])
 const isFound = ref(false)
+const isLoading = ref(false)
 const languageOptions = ref([
   { label: 'Tiếng Việt', value: 'vi', icon: VietnamFlag },
   { label: '中文', value: 'cn', icon: ChinaFlag },
@@ -95,6 +100,7 @@ const handleSearch = () => {
   if (tracking.value.length === 0) {
     return
   }
+  isLoading.value = true
   const codes = tracking.value.split(' ')
   axios
     .post(`http://171.244.62.54/api/tracking-transport`, { codes })
@@ -118,6 +124,9 @@ const handleSearch = () => {
           ? `错误: ${err.response?.data?.message || err.message}`
           : `Lỗi: ${err.response?.data?.message || err.message}`
       isFound.value = false
+    })
+    .finally(() => {
+      isLoading.value = false
     })
 }
 
