@@ -110,9 +110,11 @@ const token = localStorage.getItem('token')
 const tableRef = ref(null)
 const isExporting = ref(false)
 const user = ref('')
-const isLoading = ref(true)
+const isLoading = ref(false)
 
 const fetchData = async () => {
+  data.value = []
+  isLoading.value = true
   await axios
     .get('http://171.244.62.54/api/session-transport', {
       params: {

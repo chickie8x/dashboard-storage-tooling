@@ -13,7 +13,7 @@
       </thead>
       <tbody v-if="data.length === 0">
         <tr>
-          <td colspan="100%" class="text-center text-gray-500">
+          <td colspan="100%" class="text-center text-gray-500 py-4">
             {{ isLoading ? '&#8693; Đang tải dữ liệu...' : '&#9888; Không có dữ liệu' }}
           </td>
         </tr>
