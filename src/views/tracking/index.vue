@@ -87,7 +87,6 @@ const headers = computed(() => {
   } else {
     return [
       { label: '运单号', value: 'code' },
-      { label: '订单状态', value: 'isDone' },
       { label: '末端派送', value: 'transporter' },
       { label: '货物状态', value: 'goodsStatus' },
       { label: '入库日期', value: 'createdAt' },
