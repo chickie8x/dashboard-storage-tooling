@@ -101,7 +101,7 @@ const handleSearch = () => {
     return
   }
   isLoading.value = true
-  const codes = tracking.value.split(' ')
+  const codes = [...new Set(tracking.value.trim().split(' '))]
   axios
     .post(`http://171.244.62.54/api/tracking-transport`, { codes })
     .then((res) => {
