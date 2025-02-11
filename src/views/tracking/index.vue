@@ -39,11 +39,32 @@
       <div class="mt-4">
         <div class="flex flex-col">
           <span class="text-2xl font-semibold"
-            >{{ lang === 'cn' ? '查询结果' : 'Kết quả tìm kiếm' }} {{ message }}</span
+            >{{ lang === 'cn' ? '查询结果' : 'Kết quả tìm kiếm' }}</span
           >
         </div>
+        <div v-if="isFound" class="flex items-center gap-x-8 mt-4">
+          <div>
+            <span class="text-slate-700">{{ lang === 'cn' ? '订单总数: ' : 'Tổng số vận đơn: ' }}</span>
+            <span class="text-blue-600 font-bold">{{ data.totalCodes }}</span>
+          </div>
+          <div>
+            <span class="text-slate-700">{{ lang === 'cn' ? '找到的数量: ' : 'Tìm thấy: ' }}</span>
+            <span class="text-green-500 font-bold">{{ data.totalFoundCodes }}</span>
+          </div>
+          <div>
+            <span class="text-slate-700">{{ lang === 'cn' ? '未找到: ' : 'Không tìm thấy: ' }}</span>
+            <span class="text-red-500 font-bold">{{ data.totalNotFoundCodes }}</span>
+          </div>
+        </div>
+        <div v-if="data.totalNotFoundCodes > 0" class="mt-2 w-full overflow-auto">
+          <span class="font-semibold text-slate-700">{{ lang === 'cn' ? '未找到的运单号: ' : 'Mã vận đơn không tìm thấy: ' }}</span>
+          <ul class="list-disc list-inside flex gap-x-4 flex-wrap">
+            <li v-for="code in data.notFoundCodes" :key="code">{{ code }}</li>
+          </ul>
+        </div>
         <div v-if="isFound" class="mt-4 w-full overflow-auto">
-          <Table :headers="headers" :data="data" />
+          <span class=" font-semibold text-slate-700">{{ lang === 'cn' ? '订单详情' : 'Mã vận đơn tìm thấy' }}</span>
+          <Table :headers="headers" :data="data.transport" />
         </div>
       </div>
     </div>
@@ -99,29 +120,25 @@ const handleSearch = () => {
   if (tracking.value.length === 0) {
     return
   }
+  if(!navigator.onLine) {
+    alert(lang.value === 'cn' ? '请检查网络连接' : 'Vui lòng kiểm tra kết nối mạng')
+    return
+  }
   isLoading.value = true
-  const codes = [...new Set(tracking.value.trim().split(' '))]
+  const s = [...new Set(tracking.value.trim().split(' '))]
+  const codes = s.filter(code => code.trim() !== '')
   axios
     .post(`http://171.244.62.54/api/tracking-transport`, { codes })
     .then((res) => {
-      if (res.data.length > 0) {
+      if (res.data) {
         data.value = res.data
         isFound.value = true
-        message.value =
-          lang.value === 'cn' ? `运单号:` : `mã vận đơn:`
       } else {
         isFound.value = false
-        message.value =
-          lang.value === 'cn'
-            ? `运单号:  未找到`
-            : `mã vận đơn: Không tìm thấy`
       }
     })
     .catch((err) => {
-      message.value =
-        lang.value === 'cn'
-          ? `错误: ${err.response?.data?.message || err.message}`
-          : `Lỗi: ${err.response?.data?.message || err.message}`
+      alert(lang.value === 'cn' ? `错误: ${err.response?.data?.message || err.message}` : `Lỗi: ${err.response?.data?.message || err.message}`)
       isFound.value = false
     })
     .finally(() => {
