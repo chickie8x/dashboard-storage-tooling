@@ -42,43 +42,91 @@
       <span class="text-gray-500">Trang :</span>
       <span
         v-if="currentPage > 1"
+        class="hover:bg-blue-500 hover:text-white rounded-full w-6 h-6 flex items-center justify-center"
         :class="{
           'text-gray-500': currentPage === 1,
           'text-blue-500 cursor-pointer': currentPage !== 1,
         }"
         @click="handlePage(1)"
-        >Đầu</span
+        ><ChevronDoubleLeftIcon class="w-4 h-4" /></span
       >
       <span
         v-if="currentPage > 1"
         @click="handlePage(currentPage - 1)"
+        class="hover:bg-blue-500 hover:text-white rounded-full w-6 h-6 flex items-center justify-center"
         :class="{
           'text-gray-500': currentPage === 1,
           'text-blue-500 cursor-pointer': currentPage !== 1,
         }"
-        >Trang trước</span
+        ><ChevronLeftIcon class="w-4 h-4" /></span
       >
+      <span
+        v-if="currentPage -2 > 0"
+        @click="handlePage(currentPage - 2)"
+        class="hover:bg-blue-500 hover:text-white rounded-full w-6 h-6 flex items-center justify-center"
+        :class="{
+          'text-gray-500': currentPage === 1,
+          'text-blue-500 cursor-pointer': currentPage !== 1,
+        }"
+      >
+        {{ currentPage -2 }}
+      </span>
+      <span
+        v-if="currentPage -1 > 0"
+        @click="handlePage(currentPage - 1)"
+        class="hover:bg-blue-500 hover:text-white rounded-full w-6 h-6 flex items-center justify-center"
+        :class="{
+          'text-gray-500': currentPage === 1,
+          'text-blue-500 cursor-pointer': currentPage !== 1,
+        }"
+      >
+        {{ currentPage -1 }}
+      </span>
       <span
         class="font-bold text-white bg-gray-600 px-2 py-1 rounded-full w-6 h-6 flex items-center justify-center"
         >{{ currentPage }}</span
       >
       <span
+        v-if="currentPage +1 < totalPage"
+        @click="handlePage(currentPage + 1)"
+        class="hover:bg-blue-500 hover:text-white rounded-full w-6 h-6 flex items-center justify-center"
+        :class="{
+          'text-gray-500': currentPage === 1,
+          'text-blue-500 cursor-pointer': currentPage !== 1,
+        }"
+      >
+        {{ currentPage + 1 }}
+      </span>
+      <span
+        v-if="currentPage +2 < totalPage"
+        @click="handlePage(currentPage +2)"
+        class="hover:bg-blue-500 hover:text-white rounded-full w-6 h-6 flex items-center justify-center"
+        :class="{
+          'text-gray-500': currentPage === 1,
+          'text-blue-500 cursor-pointer': currentPage !== 1,
+        }"
+      >
+        {{ currentPage +2 }}
+      </span>
+      <span
         v-if="currentPage < totalPage"
         @click="handlePage(currentPage + 1)"
+        class="hover:bg-blue-500 hover:text-white rounded-full w-6 h-6 flex items-center justify-center"
         :class="{
           'text-gray-500': currentPage === totalPage,
           'text-blue-500 cursor-pointer': currentPage !== totalPage,
         }"
-        >Trang sau</span
+        ><ChevronRightIcon class="w-4 h-4" /></span
       >
       <span
         v-if="currentPage < totalPage"
+        class="hover:bg-blue-500 hover:text-white rounded-full w-6 h-6 flex items-center justify-center"
         :class="{
           'text-gray-500': currentPage === totalPage,
           'text-blue-500 cursor-pointer': currentPage !== totalPage,
         }"
         @click="handlePage(totalPage)"
-        >Cuối</span
+        ><ChevronDoubleRightIcon class="w-4 h-4" /></span
       >
     </div>
   </div>
@@ -93,7 +141,7 @@ import { sessionTableHeaders } from '@/components/kits/table'
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
-import { ArrowDownTrayIcon, InformationCircleIcon } from '@heroicons/vue/24/solid'
+import { ArrowDownTrayIcon, ChevronDoubleLeftIcon, ChevronLeftIcon, ChevronRightIcon, ChevronDoubleRightIcon, InformationCircleIcon } from '@heroicons/vue/24/solid'
 import { exportExcel, preprocessData } from '@/utils'
 import Loading from '@/components/icons/loading.vue'
 import UserIcon from '@/components/icons/user.vue'
