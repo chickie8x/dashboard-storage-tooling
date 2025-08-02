@@ -108,7 +108,7 @@ const handleCloseSession = () => {
     transportCodeQuantity: listItems.value.length,
   }
   axios
-    .post('http://171.244.62.54/api/session-transport/create', data, {
+    .post('http://171.244.143.152/api/session-transport/create', data, {
       headers: {
         authorization: `Bearer ${token.value}`,
       },

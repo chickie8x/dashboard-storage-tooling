@@ -24,7 +24,7 @@ const isLoading = ref(true)
 
 const fetchData = async () => {
   await axios
-    .get(`http://171.244.62.54/api/session-transport/${id}`, {
+    .get(`http://171.244.143.152/api/session-transport/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
