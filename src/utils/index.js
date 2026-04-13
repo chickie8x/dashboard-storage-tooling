@@ -5,6 +5,10 @@ export const formatDate = (date) => {
   return format(new Date(date), 'dd/MM/yyyy')
 }
 
+export const formatDateTime = (date) => {
+  return format(new Date(date), 'dd/MM/yyyy - HH:mm')
+}
+
 export const exportExcel = (data) => {
   const worksheet = XLSX.utils.json_to_sheet(data)
   const workbook = XLSX.utils.book_new()
@@ -50,7 +54,7 @@ export const preprocessData = (data) => {
     }
 
     if (item.createdAt) {
-      item['Ngày tạo'] = formatDate(item.createdAt)
+      item['Ngày tạo'] = formatDateTime(item.createdAt)
       delete item.createdAt
     }
 

@@ -50,7 +50,7 @@
             ]"
             @click="handleClick(header.value, row.id)"
           >
-            {{ header.value === 'createdAt' ? formatDate(row[header.value]) : row[header.value] }}
+            {{ header.value === 'createdAt' ? formatDateTime(row[header.value]) : row[header.value] }}
           </td>
         </tr>
       </tbody>
@@ -59,7 +59,7 @@
 </template>
 
 <script setup>
-import { formatDate } from '@/utils'
+import { formatDateTime } from '@/utils'
 import { useRouter } from 'vue-router'
 import { ref, watch } from 'vue'
 
