@@ -31,13 +31,13 @@
               header.value === 'goodsStatus' && row[header.value] === 'OK'
                 ? 'text-green-600 font-semibold'
                 : '',
-              header.value === 'goodsStatus' && row[header.value] === 'LENKE'
+              header.value === 'goodsStatus' && row[header.value] === 'Lên kệ'
                 ? 'text-green-600 font-semibold'
                 : '',  
               header.value === 'goodsStatus' && row[header.value] === 'Hỏng'
                 ? 'text-red-600 font-semibold'
                 : '',
-              header.value === 'goodsStatus' && row[header.value] === 'HAKE'
+              header.value === 'goodsStatus' && row[header.value] === 'Hạ kệ'
                 ? 'text-red-600 font-semibold'
                 : '',
               header.value === 'goodsStatus'
