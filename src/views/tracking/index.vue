@@ -111,6 +111,7 @@ const headers = computed(() => {
       { label: '末端派送', value: 'transporter' },
       { label: '货物状态', value: 'goodsStatus' },
       { label: '入库日期', value: 'createdAt' },
+      { label: '制单人', value: 'author' },
       { label: '备注', value: 'note' },
     ]
   }

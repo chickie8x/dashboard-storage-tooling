@@ -13,6 +13,7 @@ export const transportCodeHeaders = [
   { label: 'Mã vận đơn', value: 'code' },
   { label: 'Đơn vị vận chuyển', value: 'transporter' },
   { label: 'Tình trạng hàng', value: 'goodsStatus' },
+  { label: 'Người tạo', value: 'author' },
   { label: 'Ngày tạo', value: 'createdAt' },
   { label: 'Ghi chú', value: 'note' },
 ]
