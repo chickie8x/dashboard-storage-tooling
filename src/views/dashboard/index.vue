@@ -16,6 +16,10 @@
         <Button variant="secondary" size="md">Tìm kiếm</Button> -->
       </div>
       <div class="flex items-center gap-2">
+        <Button variant="primary" size="md" class="flex items-center" @click="handleImport">
+          <ArrowUpTrayIcon class="w-4 h-4 mr-2" />
+          Nhập dữ liệu
+        </Button>
         <Button variant="primary" size="md" class="flex items-center" @click="handleExport">
           <ArrowDownTrayIcon v-if="!isExporting" class="w-4 h-4 mr-2" />
           <Loading v-else class="w-4 h-4 animate-spin" />
@@ -25,109 +29,72 @@
     </div>
     <div class="mt-4 flex items-center gap-2">
       <InformationCircleIcon class="w-5 h-5 text-orange-600" />
-      <span class="text-sm text-orange-500"
-        >Lưu ý, trỏ chuột vào ô chi chú để xem đầy đủ nội dung ghi chú</span
-      >
+      <span class="text-sm text-orange-500">Lưu ý, trỏ chuột vào ô chi chú để xem đầy đủ nội dung ghi chú</span>
     </div>
     <div class="w-full flex-grow mt-1">
-      <Table
-        :headers="sessionTableHeaders"
-        :data="data"
-        :isLoading="isLoading"
-        @selectRow="handleSelectRow"
-        ref="tableRef"
-      />
+      <Table :headers="sessionTableHeaders" :data="data" :isLoading="isLoading" @selectRow="handleSelectRow"
+        ref="tableRef" />
     </div>
     <div class="mt-4 gap-4 flex items-center justify-center w-full">
       <span class="text-gray-500">Trang :</span>
-      <span
-        v-if="currentPage > 1"
-        class="hover:bg-blue-500 hover:text-white rounded-full w-6 h-6 flex items-center justify-center"
-        :class="{
+      <span v-if="currentPage > 1"
+        class="hover:bg-blue-500 hover:text-white rounded-full w-6 h-6 flex items-center justify-center" :class="{
           'text-gray-500': currentPage === 1,
           'text-blue-500 cursor-pointer': currentPage !== 1,
-        }"
-        @click="handlePage(1)"
-        ><ChevronDoubleLeftIcon class="w-4 h-4" /></span
-      >
-      <span
-        v-if="currentPage > 1"
-        @click="handlePage(currentPage - 1)"
-        class="hover:bg-blue-500 hover:text-white rounded-full w-6 h-6 flex items-center justify-center"
-        :class="{
-          'text-gray-500': currentPage === 1,
-          'text-blue-500 cursor-pointer': currentPage !== 1,
-        }"
-        ><ChevronLeftIcon class="w-4 h-4" /></span
-      >
-      <span
-        v-if="currentPage -2 > 0"
-        @click="handlePage(currentPage - 2)"
-        class="hover:bg-blue-500 hover:text-white rounded-full w-6 h-6 flex items-center justify-center"
-        :class="{
-          'text-gray-500': currentPage === 1,
-          'text-blue-500 cursor-pointer': currentPage !== 1,
-        }"
-      >
-        {{ currentPage -2 }}
+        }" @click="handlePage(1)">
+        <ChevronDoubleLeftIcon class="w-4 h-4" />
       </span>
-      <span
-        v-if="currentPage -1 > 0"
-        @click="handlePage(currentPage - 1)"
-        class="hover:bg-blue-500 hover:text-white rounded-full w-6 h-6 flex items-center justify-center"
-        :class="{
+      <span v-if="currentPage > 1" @click="handlePage(currentPage - 1)"
+        class="hover:bg-blue-500 hover:text-white rounded-full w-6 h-6 flex items-center justify-center" :class="{
           'text-gray-500': currentPage === 1,
           'text-blue-500 cursor-pointer': currentPage !== 1,
-        }"
-      >
-        {{ currentPage -1 }}
+        }">
+        <ChevronLeftIcon class="w-4 h-4" />
       </span>
-      <span
-        class="font-bold text-white bg-gray-600 px-2 py-1 rounded-full w-6 h-6 flex items-center justify-center"
-        >{{ currentPage }}</span
-      >
-      <span
-        v-if="currentPage +1 < totalPage"
-        @click="handlePage(currentPage + 1)"
-        class="hover:bg-blue-500 hover:text-white rounded-full w-6 h-6 flex items-center justify-center"
-        :class="{
+      <span v-if="currentPage - 2 > 0" @click="handlePage(currentPage - 2)"
+        class="hover:bg-blue-500 hover:text-white rounded-full w-6 h-6 flex items-center justify-center" :class="{
           'text-gray-500': currentPage === 1,
           'text-blue-500 cursor-pointer': currentPage !== 1,
-        }"
-      >
+        }">
+        {{ currentPage - 2 }}
+      </span>
+      <span v-if="currentPage - 1 > 0" @click="handlePage(currentPage - 1)"
+        class="hover:bg-blue-500 hover:text-white rounded-full w-6 h-6 flex items-center justify-center" :class="{
+          'text-gray-500': currentPage === 1,
+          'text-blue-500 cursor-pointer': currentPage !== 1,
+        }">
+        {{ currentPage - 1 }}
+      </span>
+      <span class="font-bold text-white bg-gray-600 px-2 py-1 rounded-full w-6 h-6 flex items-center justify-center">{{
+        currentPage }}</span>
+      <span v-if="currentPage + 1 < totalPage" @click="handlePage(currentPage + 1)"
+        class="hover:bg-blue-500 hover:text-white rounded-full w-6 h-6 flex items-center justify-center" :class="{
+          'text-gray-500': currentPage === 1,
+          'text-blue-500 cursor-pointer': currentPage !== 1,
+        }">
         {{ currentPage + 1 }}
       </span>
-      <span
-        v-if="currentPage +2 < totalPage"
-        @click="handlePage(currentPage +2)"
-        class="hover:bg-blue-500 hover:text-white rounded-full w-6 h-6 flex items-center justify-center"
-        :class="{
+      <span v-if="currentPage + 2 < totalPage" @click="handlePage(currentPage + 2)"
+        class="hover:bg-blue-500 hover:text-white rounded-full w-6 h-6 flex items-center justify-center" :class="{
           'text-gray-500': currentPage === 1,
           'text-blue-500 cursor-pointer': currentPage !== 1,
-        }"
-      >
-        {{ currentPage +2 }}
+        }">
+        {{ currentPage + 2 }}
       </span>
-      <span
-        v-if="currentPage < totalPage"
-        @click="handlePage(currentPage + 1)"
-        class="hover:bg-blue-500 hover:text-white rounded-full w-6 h-6 flex items-center justify-center"
-        :class="{
+      <span v-if="currentPage < totalPage" @click="handlePage(currentPage + 1)"
+        class="hover:bg-blue-500 hover:text-white rounded-full w-6 h-6 flex items-center justify-center" :class="{
           'text-gray-500': currentPage === totalPage,
           'text-blue-500 cursor-pointer': currentPage !== totalPage,
-        }"
-        ><ChevronRightIcon class="w-4 h-4" /></span
-      >
-      <span
-        v-if="currentPage < totalPage"
-        class="hover:bg-blue-500 hover:text-white rounded-full w-6 h-6 flex items-center justify-center"
-        :class="{
+        }">
+        <ChevronRightIcon class="w-4 h-4" />
+      </span>
+      <span v-if="currentPage < totalPage"
+        class="hover:bg-blue-500 hover:text-white rounded-full w-6 h-6 flex items-center justify-center" :class="{
           'text-gray-500': currentPage === totalPage,
           'text-blue-500 cursor-pointer': currentPage !== totalPage,
-        }"
-        @click="handlePage(totalPage)"
-        ><ChevronDoubleRightIcon class="w-4 h-4" /></span
-      >
+        }" @click="handlePage(totalPage)">
+        <ChevronDoubleRightIcon class="w-4 h-4" />
+      </span>
     </div>
   </div>
 </template>
@@ -141,14 +108,13 @@ import { sessionTableHeaders } from '@/components/kits/table'
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
-import { ArrowDownTrayIcon, ChevronDoubleLeftIcon, ChevronLeftIcon, ChevronRightIcon, ChevronDoubleRightIcon, InformationCircleIcon } from '@heroicons/vue/24/solid'
+import { ArrowDownTrayIcon, ArrowUpTrayIcon, ChevronDoubleLeftIcon, ChevronLeftIcon, ChevronRightIcon, ChevronDoubleRightIcon, InformationCircleIcon } from '@heroicons/vue/24/solid'
 import { exportExcel, preprocessData } from '@/utils'
 import Loading from '@/components/icons/loading.vue'
 import UserIcon from '@/components/icons/user.vue'
 import { jwtDecode } from 'jwt-decode'
 
 const router = useRouter()
-const search = ref('')
 const data = ref([])
 const currentPage = ref(1)
 const pageSize = ref(10)
@@ -229,6 +195,10 @@ const handleExport = () => {
 const handleLogout = () => {
   localStorage.removeItem('token')
   router.push('/auth')
+}
+
+const handleImport = () => {
+  router.push('/import')
 }
 
 onMounted(() => {
